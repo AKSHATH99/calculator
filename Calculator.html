@@ -1,0 +1,230 @@
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-image: url("https://th.bing.com/th/id/OIP.Fy1p_s8bTR2Jw81sSSKVCQHaFj?pid=ImgDet&rs=1");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            width: 100%;
+            height: 55px;
+            background-color: cornsilk;
+            color:black;
+            display: flex;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 38px;
+            font-family: cursive;
+        }
+
+        .contact {
+            margin-left: 583px;
+            font-size: 21px;
+        }
+        a{
+            color:white;
+            text-decoration: none;
+            margin: 28px;
+            margin-top: 2px;
+        }
+
+        #template {
+            border: 2px solid black;
+            background-color: black;
+            height: 604px;
+            width: 447px;
+            margin-left: 394px;
+            margin-top: 8px;
+            border-radius: 29px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #template::before {
+            content: "";
+            background-image: url("https://th.bing.com/th/id/OIP.Fy1p_s8bTR2Jw81sSSKVCQHaFj?pid=ImgDet&rs=1");
+            filter: blur(10px);
+            /* Adjust the blur amount as needed */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #result {
+            border: 2px solid cornsilk;
+            height: 111px;
+            width: 444px;
+            /* margin-left: 10px; */
+            margin-top: 1px;
+            background-color: cornsilk;
+            color: black;
+            text-align: right;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+            font-size: 54px;
+        }
+
+        #buttons {
+
+            height: 400px;
+            margin-top: 7px;
+            display: grid;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-auto-rows: minmax(62px, auto);
+            grid-gap: 1rem;
+        }
+
+        .boxes {
+            border: 2px solid white;
+            background-color: wheat;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            height: 61px;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 38px
+        }
+        img{
+            height: 39px;
+            width: 41px;
+        }
+        .boxes:hover{
+            background-color: white;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header>
+        <div class="name">CALCULATOR</div>
+        <div class="contact">
+            <a href="" style="color:black ; font-size:17px">Reach Out to Me : </a>
+            <a href="https://twitter.com/AkshathP2"><img src="https://vectorseek.com/wp-content/uploads/2023/07/Twitter-X-New-Logo-Vector-2.png" alt="twitter"></a>
+            <a href="https://github.com/AKSHATH99"> <img src="https://cdn4.iconfinder.com/data/icons/liu-square-blac/60/github-square-social-media-512.png" alt="github"></a>
+            <a href="mailto:akshathpkk@gmail.com"> <img src="https://www.freepnglogos.com/uploads/logo-gmail-png/logo-gmail-png-gmail-icon-download-png-and-vector-1.png" alt="gmail"></a>
+        </div>
+
+    </header>
+    <div id="template">
+        <div id="result">
+
+        </div>
+        <div id="buttons">
+            <button class="boxes number">1</button>
+            <button class="boxes number">2</button>
+            <button class="boxes number">3</button>
+            <button class="boxes number">4</button>
+            <button class="boxes number">5</button>
+            <button class="boxes number">6</button>
+            <button class="boxes number">7</button>
+            <button class="boxes number">8</button>
+            <button class="boxes number">9</button>
+            <button class="boxes number">0</button>
+            <button class="boxes operator" onclick="display.innerText= display.innerText+'+'">+</button>
+            <button class="boxes operator" onclick=" display.innerText= display.innerText+ '-'">-</button>
+            <button class="boxes operator" onclick=" display.innerText= display.innerText+ '*'">*</button>
+            <button class="boxes operator" onclick=" display.innerText= display.innerText+ '/'">/</button>
+            <button class="boxes equals" onclick=" display.innerText= display.innerText+ '='">=</button>
+            <button class="boxes clear" onclick="clearCalculator()">CLEAR</button>
+
+        </div>
+    </div>
+
+
+    <script>
+        let buttons = document.getElementById("buttons")
+        let display = document.getElementById("result")
+        let answerEl = document.getElementById("result")
+        let currentinput = "";
+        let currentoperator = "";
+        let previousinput = "";
+
+        function updatedisplay() {
+            display.innerText = display.innerText + currentinput;
+        }
+        function clearCalculator() {
+            event.preventDefault();
+            // Clear the calculator
+            currentinput = "";
+            currentoperator = '';
+            previousinput = "";
+            display.innerHTML = " ";
+        }
+
+        function handlebutton(event) {
+            const clickbutton = event.target;
+
+            if (clickbutton.classList.contains('number')) {
+                currentinput += clickbutton.textContent;
+                updatedisplay();
+            }
+            else if (clickbutton.classList.contains('operator')) {
+                currentoperator += clickbutton.textContent;
+                previousinput = currentinput;
+                currentinput = "";
+            }
+            else if (clickbutton.classList.contains('equals')) {
+                if (currentinput && previousinput && currentoperator) {
+                    switch (currentoperator) {
+                        case '+':
+                            currentinput = String(parseFloat(previousinput) + parseFloat(currentinput));
+
+                            break;
+                        case '-':
+                            currentinput = String(parseFloat(previousinput) - parseFloat(currentinput));
+
+                            break;
+                        case '*':
+                            currentinput = String(parseFloat(previousinput) * parseFloat(currentinput));
+
+                            break;
+                        case '/':
+                            currentinput = String(parseFloat(previousinput) / parseFloat(currentinput));
+
+                            break;
+
+
+                    }
+                    updatedisplay();
+                }
+            }
+            else if (clickbutton.classList.contains('clear')) {
+                clearCalculator();
+                updatedisplay();
+
+
+
+            }
+        }
+
+
+        document.getElementById('buttons').addEventListener('click', handlebutton);
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
